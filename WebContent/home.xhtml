@@ -16,45 +16,59 @@
 			class="d-flex justify-content-md-center align-items-center vh-100">
 
 
-			<h:form>
-				<h:messages>
-				</h:messages>
-				<div class="form-group">
+
+
+			<div class="form-group">
+				<h:form>
 					<h:panelGrid columns="2">
-						<h:outputLabel value="Modelo"></h:outputLabel>
-						<h:inputText styleClass="form-control"
+						<h:outputLabel value="* Modelo"></h:outputLabel>
+						<h:inputText required="true"
+							requiredMessage="O campo do modelo não pode ser vazio"
+							styleClass="form-control"
 							value="#{concessionariaController.veiculo.modelo}"></h:inputText>
-						<h:outputLabel value="Marca"></h:outputLabel>
-						<h:inputText styleClass="form-control"
+						<h:outputLabel value="* Marca"></h:outputLabel>
+						<h:inputText styleClass="form-control" required="true"
+							requiredMessage="O campo da marca não pode ser vazio"
 							value="#{concessionariaController.veiculo.marca}"></h:inputText>
-						<h:outputLabel value="Cor"></h:outputLabel>
-						<h:inputText styleClass="form-control"
+						<h:outputLabel value="* Cor"></h:outputLabel>
+						<h:inputText styleClass="form-control" required="true"
+							requiredMessage="O campo da cor não pode ser vazio"
 							value="#{concessionariaController.veiculo.cor}"></h:inputText>
-						<h:outputLabel value="Ano"></h:outputLabel>
+						<h:outputLabel value="* Ano"></h:outputLabel>
 						<h:inputText styleClass="form-control"
-							value="#{concessionariaController.veiculo.ano}"></h:inputText>
+							value="#{concessionariaController.veiculo.ano}" required="true"
+							requiredMessage="O campo do ano não pode ser vazio"
+							validatorMessage="Digite apenas o ano, ex: 2016">
+							<f:validateRegex pattern="[0-9]{4}"></f:validateRegex>
+							<f:validateLength minimum="4" maximum="4"></f:validateLength>
+						</h:inputText>
 						<h:outputLabel value="Versão"></h:outputLabel>
+						<h:inputText styleClass="form-control"
+							value="#{concessionariaController.veiculo.versao}"></h:inputText>
+						<h:outputLabel value="Carroceria"></h:outputLabel>
+						<h:selectOneMenu
+							value="#{concessionariaController.veiculo.carroceria}">
+							<f:selectItems
+								value="#{concessionariaController.listaCarroceria}"
+								itemLabel="#{objeto.label}" var="objeto"></f:selectItems>
+						</h:selectOneMenu>
 
 					</h:panelGrid>
-					<h:panelGrid columns="4">
+					<h:panelGrid columns="2">
 						<h:commandButton styleClass="btn btn-primary"
 							disabled="#{concessionariaController.veiculo.id != null}"
 							value="Inserir"
 							actionListener="#{concessionariaController.inserir}"></h:commandButton>
 						<h:commandButton styleClass="btn btn-primary"
 							disabled="#{concessionariaController.veiculo.id == null}"
-							value="Editar"
-							actionListener="#{concessionariaController.editar}"></h:commandButton>
-						<h:commandButton styleClass="btn btn-primary"
-							disabled="#{concessionariaController.veiculo.id == null}"
-							value="Excluir"
-							actionListener="#{concessionariaController.excluir(obj)}"></h:commandButton>
-
-						<h:commandButton styleClass="btn btn-primary" value="Limpar"
-							actionListener="#{concessionariaController.limpar}"></h:commandButton>
+							value="Alterar"
+							actionListener="#{concessionariaController.alterar}"></h:commandButton>
 					</h:panelGrid>
-					<br></br>
+				</h:form>
 
+				<br></br>
+
+				<h:form>
 					<h:dataTable value="#{concessionariaController.listaVeiculos}"
 						var="obj">
 						<h:column>
@@ -82,14 +96,37 @@
 							<h:outputLabel value="#{obj.versao}"></h:outputLabel>
 						</h:column>
 						<h:column>
-							<h:commandButton styleClass="btn btn-primary"
-								actionListener="#{concessionariaController.selecionar(obj)}"
-								value="Selecionar"></h:commandButton>
+							<f:facet name="header">Carroceria</f:facet>
+							<h:outputLabel value="#{obj.carroceria.label}" />
 						</h:column>
-					</h:dataTable>
-				</div>
+						<h:column>
+							<h:commandButton styleClass="btn btn-primary"
+								disabled="#{concessionariaController.veiculo.id != null}"
+								value="Selecionar"
+								actionListener="#{concessionariaController.editar(obj)}"></h:commandButton>
+						</h:column>
+						<h:column>
+							<h:commandButton styleClass="btn btn-primary"
+								disabled="#{concessionariaController.veiculo.id == null}"
+								value="Excluir"
+								actionListener="#{concessionariaController.excluir(obj)}"></h:commandButton>
+						</h:column>
+						<h:column>
+							<h:commandButton styleClass="btn btn-primary"
+								disabled="#{concessionariaController.veiculo.id == null}"
+								value="Limpar"
+								actionListener="#{concessionariaController.limpar}"></h:commandButton>
+						</h:column>
 
-			</h:form>
+
+					</h:dataTable>
+				</h:form>
+				<h:messages>
+				</h:messages>
+
+			</div>
+
+
 		</div>
 	</div>
 

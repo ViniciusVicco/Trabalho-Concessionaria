@@ -60,15 +60,13 @@ public class Veiculo implements Cloneable {
 	}
 
 	public Veiculo getClone() {
-		Veiculo returnVeiculo = new Veiculo();
 		try {
-			returnVeiculo = (Veiculo) super.clone();
-				} catch(Exception e) {
-					System.out.println(e);
-				}
-		return returnVeiculo;
+			return (Veiculo) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
 
 	
 	
