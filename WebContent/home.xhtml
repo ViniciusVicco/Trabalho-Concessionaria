@@ -11,7 +11,7 @@
 </h:head>
 <h:body styleClass="">
 	<div class="container h-100">
-		<h1>Projeto Concessionaria</h1>
+		<h1>Projeto Concessionaria Vinícius</h1>
 		<div
 			class="d-flex justify-content-md-center align-items-center vh-100">
 
@@ -22,31 +22,33 @@
 				<h:form>
 					<h:panelGrid columns="2">
 						<h:outputLabel value="* Modelo"></h:outputLabel>
-						<h:inputText required="true"
+						<h:inputText id="modeloInput" required="true"
 							requiredMessage="O campo do modelo não pode ser vazio"
 							styleClass="form-control"
 							value="#{concessionariaController.veiculo.modelo}"></h:inputText>
 						<h:outputLabel value="* Marca"></h:outputLabel>
-						<h:inputText styleClass="form-control" required="true"
+						<h:inputText id="marcaInput" styleClass="form-control"
+							required="true"
 							requiredMessage="O campo da marca não pode ser vazio"
 							value="#{concessionariaController.veiculo.marca}"></h:inputText>
 						<h:outputLabel value="* Cor"></h:outputLabel>
-						<h:inputText styleClass="form-control" required="true"
+						<h:inputText id="corInput" styleClass="form-control"
+							required="true"
 							requiredMessage="O campo da cor não pode ser vazio"
 							value="#{concessionariaController.veiculo.cor}"></h:inputText>
 						<h:outputLabel value="* Ano"></h:outputLabel>
-						<h:inputText styleClass="form-control"
+						<h:inputText id="anoInput" styleClass="form-control"
 							value="#{concessionariaController.veiculo.ano}" required="true"
-							requiredMessage="O campo do ano não pode ser vazio"
-							validatorMessage="Digite apenas o ano, ex: 2016">
-							<f:validateRegex pattern="[0-9]{4}"></f:validateRegex>
-							<f:validateLength minimum="4" maximum="4"></f:validateLength>
+							requiredMessage="O campo do ano não pode ser vazio, ex: 01/01/2021">
+
+							<f:convertDateTime pattern="dd/MM/yyyy" type="localDate"
+								locale="pt_BR"></f:convertDateTime>
 						</h:inputText>
 						<h:outputLabel value="Versão"></h:outputLabel>
-						<h:inputText styleClass="form-control"
+						<h:inputText id="versaoInput" styleClass="form-control"
 							value="#{concessionariaController.veiculo.versao}"></h:inputText>
 						<h:outputLabel value="Carroceria"></h:outputLabel>
-						<h:selectOneMenu
+						<h:selectOneMenu id="cacorroceriaInput"
 							value="#{concessionariaController.veiculo.carroceria}">
 							<f:selectItems
 								value="#{concessionariaController.listaCarroceria}"
@@ -57,12 +59,16 @@
 					<h:panelGrid columns="2">
 						<h:commandButton styleClass="btn btn-primary"
 							disabled="#{concessionariaController.veiculo.id != null}"
-							value="Inserir"
-							actionListener="#{concessionariaController.inserir}"></h:commandButton>
+							value="Inserir">
+							<f:ajax listener="#{concessionariaController.inserir}"
+								execute="@all" render="@all" event="click"></f:ajax>
+						</h:commandButton>
 						<h:commandButton styleClass="btn btn-primary"
 							disabled="#{concessionariaController.veiculo.id == null}"
-							value="Alterar"
-							actionListener="#{concessionariaController.alterar}"></h:commandButton>
+							value="Alterar">
+							<f:ajax listener="#{concessionariaController.alterar}"
+								execute="@all" render="@all" event="click"></f:ajax>
+						</h:commandButton>
 					</h:panelGrid>
 				</h:form>
 
@@ -89,7 +95,9 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ano</f:facet>
-							<h:outputLabel value="#{obj.ano}"></h:outputLabel>
+							<h:outputLabel value="#{obj.ano}">
+
+							</h:outputLabel>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Versão</f:facet>
@@ -102,20 +110,26 @@
 						<h:column>
 							<h:commandButton styleClass="btn btn-primary"
 								disabled="#{concessionariaController.veiculo.id != null}"
-								value="Selecionar"
-								actionListener="#{concessionariaController.editar(obj)}"></h:commandButton>
+								value="Selecionar">
+								<f:ajax listener="#{concessionariaController.editar(obj)}"
+									execute="@all" render="@all" event="click"></f:ajax>
+							</h:commandButton>
 						</h:column>
 						<h:column>
 							<h:commandButton styleClass="btn btn-primary"
 								disabled="#{concessionariaController.veiculo.id == null}"
-								value="Excluir"
-								actionListener="#{concessionariaController.excluir(obj)}"></h:commandButton>
+								value="Excluir">
+							<f:ajax listener="#{concessionariaController.excluir(obj)}"
+									execute="@all" render="@all" event="click"></f:ajax>
+							</h:commandButton>
 						</h:column>
 						<h:column>
 							<h:commandButton styleClass="btn btn-primary"
 								disabled="#{concessionariaController.veiculo.id == null}"
-								value="Limpar"
-								actionListener="#{concessionariaController.limpar}"></h:commandButton>
+								value="Limpar">
+							<f:ajax listener="#{concessionariaController.limpar}"
+									execute="@all" render="@all" event="click"></f:ajax>
+							</h:commandButton>
 						</h:column>
 
 

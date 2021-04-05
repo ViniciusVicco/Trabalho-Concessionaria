@@ -1,13 +1,24 @@
 package br.models;
+import java.time.LocalDate;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import br.enums.Carroceria;
 
+
+
 public class Veiculo implements Cloneable {
 	private Integer id;
+	@NotNull
 	private String modelo;
+	@NotNull
 	private String marca;
+	@NotNull
 	private String cor;
-	private String ano;
+	@Past(message = "A data não pode ser superior a data atual")
+	private LocalDate ano;
+	@NotNull
 	private String versao;
 	private Carroceria carroceria;
 	public Carroceria getCarroceria() {
@@ -31,6 +42,12 @@ public class Veiculo implements Cloneable {
 	public String getMarca() {
 		return marca;
 	}
+	public LocalDate getAno() {
+		return ano;
+	}
+	public void setAno(LocalDate ano) {
+		this.ano = ano;
+	}
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
@@ -39,12 +56,6 @@ public class Veiculo implements Cloneable {
 	}
 	public void setCor(String cor) {
 		this.cor = cor;
-	}
-	public String getAno() {
-		return ano;
-	}
-	public void setAno(String ano) {
-		this.ano = ano;
 	}
 	public String getVersao() {
 		return versao;
